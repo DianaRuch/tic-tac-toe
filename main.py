@@ -8,6 +8,11 @@ class Format:
     underline = "\033[4m"
     strike = "\u0336"
 
+class GameCharacters:
+    x_char = "x"
+    o_char = "o"
+
+
 def visualization(matrix):
     matrix_size = len(matrix)
     for i in range(matrix_size):
@@ -25,11 +30,11 @@ def visualization(matrix):
 
 def move(matrix, x, y, turn):
     if matrix[x][y] == 0 and (turn % 2) == 0 :
-        print("Ходит х")
-        matrix[x][y] = "x"
+        print("Player " + GameCharacters.x_char + " move")
+        matrix[x][y] = GameCharacters.x_char
     elif matrix[x][y] == 0 and (turn % 2) == 1 :
-        print("ходит о")
-        matrix[x][y] = "o"
+        print("Player " + GameCharacters.o_char + " move")
+        matrix[x][y] = GameCharacters.o_char
     else:
         False
 
