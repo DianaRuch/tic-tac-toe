@@ -1,8 +1,6 @@
 size = 3
-tictactoe = []
-for i in range(size):
-    tictactoe.append([0]*size)
-    
+tictactoe = [[0]*size for i in range(size)]
+
 class Format:
     end = "\033[0m"
     underline = "\033[4m"
@@ -11,7 +9,6 @@ class Format:
 class GameCharacters:
     x_char = "x"
     o_char = "o"
-
 
 def visualization(matrix):
     matrix_size = len(matrix)
@@ -30,13 +27,12 @@ def visualization(matrix):
 
 def move(matrix, x, y, turn):
     if matrix[x][y] == 0 and (turn % 2) == 0 :
-        print("Player " + GameCharacters.x_char + " move")
         matrix[x][y] = GameCharacters.x_char
     elif matrix[x][y] == 0 and (turn % 2) == 1 :
-        print("Player " + GameCharacters.o_char + " move")
         matrix[x][y] = GameCharacters.o_char
     else:
         False
+
 
 def checker(matrix):
     matrix_size = len(matrix)
@@ -44,6 +40,7 @@ def checker(matrix):
         row = set(matrix[i])
         if len(row) == 1 and list(row)[0] != 0:
             print("Congratulations!", list(row)[0], "player won!")
+            map(Format.strike, matrix[i])
             return False
         for i in range(matrix_size):
             column = []
@@ -52,11 +49,16 @@ def checker(matrix):
             if len(set(column)) == 1 and list(column)[0] != 0:
                 print("Congratulations!", list(column)[0], "player won!")
                 return False 
-        diagonal = []
+        diagonal_one = []
+        diagonal_two = []
         for i in range(matrix_size):
-            diagonal.append(matrix[i][i])
-        if len(set(diagonal)) == 1 and list(set(diagonal))[0] != 0:
-            print("Congratulations!", list(set(diagonal))[0], "player won!")
+            diagonal_one.append(matrix[i][i])
+            diagonal_two.append(matrix[i][matrix_size-i-1])
+        if len(set(diagonal_one)) == 1 and list(set(diagonal_one))[0] != 0:
+            print("Congratulations!", list(set(diagonal_one))[0], "player won!")
+            return False
+        elif len(set(diagonal_two)) == 1 and list(set(diagonal_two))[0] != 0:
+            print("Congratulations!", list(set(diagonal_two))[0], "player won!")
             return False
         else:
             k = 0
@@ -69,6 +71,10 @@ def checker(matrix):
     return True
 i = 0
 while i <= (size*size):
+    if i % 2 == 0:
+        print("Player " + GameCharacters.x_char + " move")
+    else:
+        print("Player " + GameCharacters.o_char + " move")
     print('Write row number')
     x = int(input()) - 1
     print('Write column number')
